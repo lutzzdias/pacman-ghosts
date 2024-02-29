@@ -10,9 +10,10 @@ public class PinkyChase : GhostChase
         Vector3 pacmanPosition = getPacmanPosition();
         Vector2 pacmanDirection = getPacmanDirection();
 
+        
         int x = (int)(pacmanPosition.x + 4 * pacmanDirection.x);
         int y = (int)(pacmanPosition.y + 4 * pacmanDirection.y);
-
+        
         Vector2 target = new Vector2(x, y);
 
         return Math.Abs(target.x - position.x) + Math.Abs(target.y - position.y);

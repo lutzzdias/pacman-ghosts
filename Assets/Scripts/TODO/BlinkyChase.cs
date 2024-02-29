@@ -13,7 +13,7 @@ public class BlinkyChase : GhostChase
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
-    {   
+    {
         // Instantiate decision node object
         Node node = other.GetComponent<Node>();
 
@@ -26,7 +26,7 @@ public class BlinkyChase : GhostChase
             // Keep track of the best direction and distance
             Vector2 bestDirection = Vector2.zero;
             float shortestDistance = float.MaxValue;
-
+            
             // Loop through each available direction
             foreach (Vector2 dir in dirs)
             {

@@ -17,7 +17,7 @@ public class InkyChase : GhostChase
             //Get the available directions in this intersection
             List<Vector2> dirs = getAvailableDirections(node);
             int count = dirs.Count;
-
+            
             //Choose a random direction and avoid going back
             //the same direction it came from
             int i = Random.Range(0, count);
