@@ -1,0 +1,69 @@
+\documentclass[12pt]{article}
+
+% page setup
+\topmargin 0.0cm
+\oddsidemargin 0.2cm
+\textwidth 16cm 
+\textheight 21cm
+\footskip 1.0cm
+
+% title setup
+\title{Entrega Intermediária} 
+
+\author{
+    Pedro Daniel Fernandes,$^{1}$ Thiago Lütz Dias$^{2}$\\
+\\
+\normalsize{$^{1}$uc20192187722@student.uc.pt - 2019218772}\\
+\normalsize{$^{2}$lutzdias@student.uc.pt - 2023171576}\\
+}
+
+% do not show date
+\date{}
+
+
+
+%%%%%%%%%%%%%%%%% END OF PREAMBLE %%%%%%%%%%%%%%%%
+
+
+
+\begin{document} 
+
+% Double-space the manuscript.
+\baselineskip24pt
+
+\maketitle 
+
+\section*{Inky}
+
+O Inky é o fantasma com comportamento mais simples e imprevisível: sempre que
+chega a uma interceção ele escolhe uma direção aleatória. Caso a direção
+escolhida seja oposta à que estava anteriormente, uma nova direção é escolhida,
+já que voltar para trás não é permitido.
+
+Portanto, o \textit{Sistema de Produção} do Inky não requer quase nenhuma
+percepção. Já as ações são as mesmas para todos os fantasmas.
+
+\paragraph*{Percepções}
+Inky precisa saber algumas coisas sobre seu estado atual:
+\begin{itemize}
+    \item O modo (chase ou frightened)
+    \item Quais direções são válidas (e.g não há uma parede)
+    \item A direção que estava antes de chegar à interceção
+\end{itemize}
+Ele não precisa saber a posição do pacman, distância de si para o pacman nem
+qualquer outra informação relacionada a qualquer outro elemento do jogo.
+
+\paragraph*{Ação}
+A ação é quase a mesma para todos, com alguns ajustes relacionados ao seu
+comportamento em relação às percepções disponíveis. Para o Inky, sua ação é
+escolher uma direção válida. Para definir se uma direção é válida ou não, ele
+faz uso de suas percepções para verificar se há uma parede ou se a direção é a
+oposta à anterior.
+
+\section*{Blinky}
+
+\section*{Pinky}
+
+\section*{Clyde}
+
+\end{document}

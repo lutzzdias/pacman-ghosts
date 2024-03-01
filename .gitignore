@@ -4,6 +4,11 @@
 #
 .DS_Store
 
+# Report
+report/*
+!report/*.tex
+!report/*.pdf
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
