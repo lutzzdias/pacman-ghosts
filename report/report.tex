@@ -8,13 +8,14 @@
 \footskip 1.0cm
 
 % title setup
-\title{Entrega Intermediária} 
+\title{Entrega Intermediária}
 
 \author{
-    Pedro Daniel Fernandes,$^{1}$ Thiago Lütz Dias$^{2}$\\
+Pedro Daniel Fernandes,$^{1}$ Thiago Lütz Dias$^{2}$\\
 \\
 \normalsize{$^{1}$uc20192187722@student.uc.pt - 2019218772}\\
 \normalsize{$^{2}$lutzdias@student.uc.pt - 2023171576}\\
+\small{PL6}\\
 }
 
 % do not show date
@@ -22,7 +23,7 @@
 
 
 
-%%%%%%%%%%%%%%%%% END OF PREAMBLE %%%%%%%%%%%%%%%%
+%! END OF PREAMBLE
 
 
 
@@ -34,33 +35,100 @@
 
 O Inky é o fantasma com comportamento mais simples e imprevisível: sempre que
 chega a uma interceção ele escolhe uma direção aleatória. Caso a direção
-escolhida seja oposta à que estava anteriormente, uma nova direção é escolhida,
-já que voltar para trás não é permitido.
-
-Portanto, o \textit{Sistema de Produção} do Inky não requer quase nenhuma
-perceção. Já as ações são as mesmas para todos os fantasmas.
+escolhida seja oposta à que estava anteriormente, uma nova direção é escolhida, já que voltar para trás não é permitido.
 
 \paragraph*{Perceções}
 Inky precisa saber algumas coisas sobre seu estado atual:
 \begin{itemize}
     \item O modo (chase ou frightened)
-    \item Quais direções são válidas (e.g não há uma parede)
+    \item Quais direções não são paredes
     \item A direção que estava antes de chegar à interceção
 \end{itemize}
+
 Ele não precisa saber a posição do pacman, distância de si para o pacman nem
 qualquer outra informação relacionada a qualquer outro elemento do jogo.
 
-\paragraph*{Ação}
-A ação é quase a mesma para todos, com alguns ajustes relacionados ao seu
-comportamento em relação às perceções disponíveis. Para o Inky, sua ação é
-escolher uma direção válida. Para definir se uma direção é válida ou não, ele
-faz uso de suas perceções para verificar se há uma parede ou se a direção é a
-oposta à anterior.
+\paragraph*{Ação} 
+Para o Inky, sua ação é escolher uma direção válida. Para definir se uma direção é válida ou não, ele faz uso de suas perceções para verificar se há uma parede ou se a direção é a oposta à anterior.
+\begin{itemize}
+    \item A direção selecionada não é uma parede $\land$ Inky não está indo para a direção oposta = Inky altera sua direção para a selecionada.
+
+    \item A direção selecionada é uma parede $\lor$ Inky está indo para a direção oposta = Inky seleciona outra direção aleatoriamente e realiza as verificações novamente.
+\end{itemize}
 
 \section*{Blinky}
 
+O Blinky tem um comportamento de perseguição para a posição do Pacman. Este comportamento é possível obter através da função \textit{getPacmanPosition} que permite ver saber onde está o Pacman, após sabermos a posição alvo podemos calcular qual é a direção que permite ao Blinky chegar mais rápido ao Pacman.
+
+\paragraph*{Perceções}
+
+Blinky precisa saber algumas coisas sobre seu estado atual:
+
+\begin{itemize}
+    \item O modo (chase ou frightened)
+    \item Quais direções não são paredes
+    \item A direção que estava antes de chegar à interceção
+    \item A posição atual do Pacman
+\end{itemize}
+
+A distância entre si e o Pacman é calculada com base na posição de ambos. A direção do pacman é irrelevante para o Blinky.
+
+\paragraph*{Ação} 
+Com base na distância calculada, descobre-se a distância resultante de selecionar cada uma das direções possíveis. A partir dessas informações, Blinky seleciona a direção que minimiza a distância entre si e o Pacman.
+
+\begin{itemize}
+    \item A direção selecionada não é uma parede $\land$ Blinky não está indo para a direção oposta = Blinky altera sua direção para a selecionada.
+    
+    \item A direção selecionada é uma parede $\lor$ Blinky está indo para a direção oposta = Blinky seleciona a segunda melhor direção e realiza as verificações novamente.
+\end{itemize}
+
 \section*{Pinky}
+O Pinky tem um comportamento semelhante ao Blinky, porém este possui um comportamento de emboscada, ou seja, quando no Blinky somente precisávamos de saber a posição do Pacman, para o Pinky também precisamos de saber a direção que o Pacman se dirige, esta direção é possível de se obter através da função \textit{getPacmanDirection}. Com base nessas informações, podemos calcular a posição 4 células à frente do Pacman. Caso a direção do Pacman seja leste, adiciona-se 4 valores, caso seja oeste, subtrai-se 4 valores. O mesmo é feito caso o Pacman esteja se movendo na vertical (norte e sul). Esse cálculo é feito da seguinte maneira: 
+\[ pacmanPosition + 4 * pacmanDirection\]
+
+\paragraph*{Perceções}
+Pinky precisa saber algumas coisas sobre seu estado atual:
+
+\begin{itemize}
+    \item O modo (chase ou frightened)
+    \item Quais direções não são paredes
+    \item A direção que estava antes de chegar à interceção
+    \item A posição atual do Pacman
+    \item A direção atual do Pacman
+\end{itemize}
+
+\paragraph*{Ação} 
+Com base na posição alvo calculada, descobre-se a distância resultante de selecionar cada uma das direções possíveis. A partir dessas informações, Pinky seleciona a direção que minimiza a distância entre si e o destino alvo.
+
+Portanto, a decisão final seria algo parecido com:
+\begin{itemize}
+    \item A direção selecionada não é uma parede $\land$ Pinky não está indo para a direção oposta = Pinky altera sua direção para a selecionada.
+    
+    \item A direção selecionada é uma parede $\lor$ Pinky está indo para a direção oposta = Pinky seleciona a segunda melhor direção e realiza as verificações novamente.
+\end{itemize}
 
 \section*{Clyde}
+O Clyde é um fantasma com fobia dos outros fantasmas, ou seja, tenta sempre maximizar a sua distância para com o fantasma mais próximo. Com base nas funções \textit{getClosestGhostPosition} conseguimos definir a posição do fantasma mais próximo. Através dessa informação, podemos selecionar uma direção para Clyde que maximiza a distância entre si e o fantasma mais próximo.
+
+\paragraph*{Perceções}
+Clyde precisa saber algumas coisas sobre seu estado atual:
+
+\begin{itemize}
+    \item O modo (chase ou frightened)
+    \item Quais direções não são paredes
+    \item A direção que estava antes de chegar à interceção
+    \item A posição do fantasma mais próximo
+\end{itemize}
+
+Como seu comportamento é definido completamente pelos outros fantasmas, ele não precisa saber nada sobre o Pacman.
+
+\paragraph*{Ação} 
+Suas ações, portanto, são resultado da análise feita em relação ao fantasma mais próximo:
+
+\begin{itemize}
+    \item A direção selecionada não é uma parede $\land$ Clyde não está indo para a direção oposta = Clyde altera sua direção para a selecionada.
+    
+    \item A direção selecionada é uma parede $\lor$ Clyde está indo para a direção oposta = Clyde seleciona a segunda melhor direção e realiza as verificações novamente.
+\end{itemize}
 
 \end{document}
